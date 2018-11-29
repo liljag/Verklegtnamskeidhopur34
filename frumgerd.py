@@ -313,25 +313,36 @@ def skra_pontun():
     print("{:<12}{:<14}{:<8}{:<14}{:<12}".format("SB-463", "Fólksbíll", "1998", "Rauður", "4500 kr/dag"))
     print("{:<12}{:<14}{:<8}{:<14}{:<12}".format("EU-N45", "Smábíll", "2014", "Grár", "2500 kr/dag"))
     print()
-    val = input("Veldu bíl (AA-X99): ")
+    val = input("Veldu bíl (AA-X99) eða n til að hætta við: ")
     print("")
-    print("Bíllinn",val,"hefur verið leigður út ({}) - ({})".format(fra, til))
-    print()
-    print_options()
+    if val.lower() == "n":
+        print("Þú hefur hætt við að leigja út bíl")
+        print()
+        print_options()
+    else:
+        print("Áætlaður kostnaður án tryggingar: 45.000 kr.")
+        val = input("Samþykkja? (y/n): ")
+        if val.lower() == "y":
+            print("Bíllinn",val,"hefur verið leigður út ({}) - ({})".format(fra, til))
+            print()
+            print_options()
+        else:
+            print("Þú hefur hætt við að leigja út bíl")
+            print()
+            print_options()
 
 def kostnadarmat():
-    bill_verð = 4500 # bara dæmi
-    pontun_til = input("Er pöntun til (j/n): ")
-    if pontun_til.lower() == "j":
-        # dagur_a, dagur_b = fletta_pontun()
-        kt = input("Hver er kennitalan? ")
-        print("Þín pöntun er frá 10/12/18 til 14/12/18 á rauðan fólksbíl, SB-463")
-        fra = "2018,12,10"
-        til = "2018,12,14"
-
-    else:
-        fra = input("Frá (YYYY, MM, DD): ")
-        til = input("Til (YYYY, MM, DD): ")
+    fra = input("Frá (YYYY, MM, DD): ")
+    til = input("Til (YYYY, MM, DD): ")
+    # Hér er sett inn copy úr fallinu birta_laus_bila()
+    print("Eftirfarandi bílar eru lausir frá {} til {}:".format(fra, til))
+    print("{:<12}{:<14}{:<8}{:<14}{:<12}".format("Bílnúmer", "Tegund", "Árgerð", "Litur", "Verð"))
+    print(60*"-")
+    print("{:<12}{:<14}{:<8}{:<14}{:<12}".format("SB-463", "Fólksbíll", "1998", "Rauður", "4500 kr/dag"))
+    print("{:<12}{:<14}{:<8}{:<14}{:<12}".format("EU-N45", "Smábíll", "2014", "Grár", "4500 kr/dag"))
+    print()
+    dummy_input = input("Bílnúmer: ")
+    bill_verd = 4500
     dagur_a = fra.split(",")[2]
     dagur_a = int(dagur_a.strip())
     dagur_b = til.split(",")[2]
@@ -342,8 +353,8 @@ def kostnadarmat():
     # við fáum tímabil frá fletta_pontun og mínusum fyrra tímabilið frá því seinna
     # þá fáum við hve marga daga viðkomandi hefur bílinn og margföldum dagana við dagskostnaðinn
     dagar = dagur_b - dagur_a
-    verð_samtals = dagar*bill_verð
-    print("Kostnaðarmat:", verð_samtals, "Kr.")
+    verd_samtals = dagar*bill_verd
+    print("Kostnaðarmat:", verd_samtals, "Kr.")
     print()
     print_options()
 
@@ -388,7 +399,7 @@ def breyta_pontun():
 
 def fletta_pontun():
     kt = input("Hver er kennitalan?")
-    print("Þín pöntun er frá 10/12/18 til 14/12/18 á rauðan jeppa, SB-463")
+    print("Viðskiptavinurinn Ásgeir Jónasson, kt. {} hefur pantað bílinn SB-463 á tímabilinu 10/12/18 til 14/12/18".format(kt))
     print()
     print_options()
 
